@@ -53,7 +53,6 @@
     60% { transform: scale(1.1); }
   }
 
-  /* restore pointer for interactive elements */
   a, button, [onclick], input, select, textarea, label { cursor: none; }
 
   ::-webkit-scrollbar { width: 8px; }
@@ -139,14 +138,28 @@
     font-size:0.8rem;color:var(--pink-deep);font-weight:600;letter-spacing:0.1em;
     text-transform:uppercase;margin-bottom:24px;animation:fadeDown 0.8s ease both;
   }
+
+  /* ── FIX: gradient text needs a color fallback so it's always visible ── */
   .hero-title{
     font-family:'Pacifico',cursive;
     font-size:clamp(2.2rem,6vw,4.5rem);line-height:1.2;
+    color: #FF85A1; /* fallback — visible even when gradient-clip fails */
     background:linear-gradient(135deg,#FF85A1,#B07FDE,#5AB4DE);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
     margin-bottom:24px;animation:fadeDown 1s ease 0.2s both;
     filter:drop-shadow(0 2px 20px rgba(255,133,161,0.4));
   }
+  /* Extra safety: if background-clip is unsupported, fall back to solid color */
+  @supports not (-webkit-background-clip: text) {
+    .hero-title {
+      background: none;
+      -webkit-text-fill-color: #FF85A1;
+      color: #FF85A1;
+    }
+  }
+
   .hero-sub{
     font-family:'Dancing Script',cursive;
     font-size:clamp(1.1rem,3vw,1.7rem);color:var(--text-mid);max-width:600px;
@@ -180,12 +193,21 @@
   /* ─── COMMON SECTION ─── */
   section{padding:100px 24px;}
   .section-label{font-size:0.75rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--pink-deep);margin-bottom:12px;display:block;}
+
+  /* FIX: section-title gradient text */
   .section-title{
     font-family:'Pacifico',cursive;font-size:clamp(2rem,5vw,3rem);
     line-height:1.2;margin-bottom:16px;
+    color: #FF85A1; /* fallback */
     background:linear-gradient(135deg,#FF85A1,#B07FDE);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
   }
+  @supports not (-webkit-background-clip: text) {
+    .section-title { background: none; -webkit-text-fill-color: #FF85A1; color: #FF85A1; }
+  }
+
   .section-sub{font-family:'Dancing Script',cursive;font-size:1.2rem;color:var(--text-mid);margin-bottom:60px;max-width:500px;}
   .section-header{text-align:center;margin-bottom:16px;}
   .section-header .section-sub{margin:0 auto 60px;}
@@ -270,7 +292,6 @@
     position: relative; overflow: hidden;
     isolation: isolate;
   }
-  /* Each card gets its own distinct solid background */
   .wc-1 { background: #FFF0F5; border-color: #FFB6C1; }
   .wc-2 { background: #F3EEFF; border-color: #C9B8FF; }
   .wc-3 { background: #EBF6FF; border-color: #89C4E1; }
@@ -305,9 +326,7 @@
     content:'';position:absolute;inset:0;
     background:radial-gradient(ellipse at 50% 60%,rgba(255,133,161,0.07) 0%,transparent 65%);
   }
-  .sorry-stars{
-    position:absolute;inset:0;pointer-events:none;
-  }
+  .sorry-stars{ position:absolute;inset:0;pointer-events:none; }
   .sorry-star{
     position:absolute;width:2px;height:2px;background:white;border-radius:50%;
     animation:twinkle linear infinite;
@@ -380,12 +399,21 @@
   .dialog-close:hover{color:rgba(255,182,193,0.6);transform:rotate(90deg);}
   .dialog-icon{font-size:3.2rem;display:block;margin-bottom:28px;animation:iconFloat 3s ease-in-out infinite;}
   @keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* FIX: dialog-title gradient text */
   .dialog-title{
     font-family:'Pacifico',cursive;font-size:2rem;
+    color: #FFB6C1; /* fallback */
     background:linear-gradient(135deg,#FFB6C1,#C9B8FF);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
     margin-bottom:28px;
   }
+  @supports not (-webkit-background-clip: text) {
+    .dialog-title { background: none; -webkit-text-fill-color: #FFB6C1; color: #FFB6C1; }
+  }
+
   .dialog-body{
     font-size:0.95rem;color:rgba(255,255,255,0.55);
     line-height:2;margin-bottom:20px;font-weight:300;
@@ -428,12 +456,21 @@
   }
   .footer-icon{font-size:3rem;display:block;margin-bottom:20px;animation:heartbeat 1.5s ease-in-out infinite;}
   @keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
+
+  /* FIX: footer-message gradient text */
   .footer-message{
     font-family:'Pacifico',cursive;font-size:clamp(1.2rem,4vw,2rem);
+    color: #FFB6C1; /* fallback */
     background:linear-gradient(135deg,#FFB6C1,#E6DEFF);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
     margin-bottom:12px;
   }
+  @supports not (-webkit-background-clip: text) {
+    .footer-message { background: none; -webkit-text-fill-color: #FFB6C1; color: #FFB6C1; }
+  }
+
   .footer-sub{font-family:'Dancing Script',cursive;font-size:1.1rem;opacity:0.6;}
   .footer-stars{font-size:1.2rem;margin-top:24px;letter-spacing:8px;opacity:0.4;}
 
@@ -481,21 +518,6 @@
   </svg>
 </div>
 
-<!--
-  ╔══════════════════════════════════════════════════════════╗
-  ║  🎵  HOW TO ADD YOUR MP3 FILES                          ║
-  ║                                                          ║
-  ║  1. Place your .mp3 files in the SAME folder as this    ║
-  ║     HTML file when you deploy on Vercel.                 ║
-  ║                                                          ║
-  ║  2. Edit the `songs` array below (in the <script>):     ║
-  ║     Replace "song1.mp3", "song2.mp3" etc. with your     ║
-  ║     actual filenames and song names.                     ║
-  ║                                                          ║
-  ║  3. Songs autoplay one after another on site open.      ║
-  ╚══════════════════════════════════════════════════════════╝
--->
-
 <audio id="audio-player" preload="auto"></audio>
 
 <!-- MUSIC BAR -->
@@ -530,7 +552,7 @@
   <div class="hero-glow glow-3"></div>
   <div class="floating-elements" id="floatingElements"></div>
   <div class="hero-badge">✨ A Very Special Day ✨</div>
-  <h1 class="hero-title">Happy 19th Birthday,<br>My Dear Sister 💖</h1>
+  <h1 class="hero-title">Happy 19th Birthday,<br>My Dear Sister <span style="-webkit-text-fill-color:initial;background:none;font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Color Emoji',sans-serif;">💖</span></h1>
   <p class="hero-sub">You are the sparkle in every ordinary day, the laughter in every memory, and the most precious soul I have the honour of calling my sister.</p>
   <div class="age-badge">🌸 Finally 19 🌸</div>
   <div class="scroll-hint">
@@ -723,18 +745,11 @@
 </footer>
 
 <script>
-// ════════════════════════════════════════════════
-//  🎵 MUSIC SETUP
-//  ► Replace the filenames and names below with your actual MP3s.
-//  ► Put your MP3 files in the SAME folder as this HTML on Vercel.
-//  ► Songs will play automatically one after another.
-// ════════════════════════════════════════════════
 const songs = [
   { file: "e1.mp3", name: "Song 1" },
   { file: "e2.mp3", name: "Song 2" },
   { file: "e3.mp3", name: "Song 3" },
   { file: "e4.mp3", name: "Song 4" },
-  // Add more: { file: "mysong.mp3", name: "My Song Name" },
 ];
 
 let currentSong = 0, isMuted = false, isPlaying = false;
@@ -778,17 +793,13 @@ player.addEventListener('error', () => {
   dot.classList.add('paused'); ppBtn.textContent = '▶';
 });
 
-// Autoplay immediately
 loadSong(0);
 window.addEventListener('load', () => { setTimeout(playSong, 300); });
-// Fallback: play on first user interaction (some browsers block autoplay)
 document.addEventListener('click', () => {
   if (!isPlaying) playSong();
 }, { once: true });
 
-// ════════════════════════════════════════════════
-//  FLOATING HEARTS
-// ════════════════════════════════════════════════
+// FLOATING HEARTS
 const floatEmojis = ['💗','💕','✨','🌸','⭐','💜','🩷','🌟','💫','🦋'];
 const fe = document.getElementById('floatingElements');
 for (let i = 0; i < 30; i++) {
@@ -799,9 +810,7 @@ for (let i = 0; i < 30; i++) {
   fe.appendChild(el);
 }
 
-// ════════════════════════════════════════════════
-//  SORRY SECTION STARS
-// ════════════════════════════════════════════════
+// SORRY STARS
 const starsEl = document.getElementById('sorryStars');
 for (let i = 0; i < 80; i++) {
   const s = document.createElement('div');
@@ -810,9 +819,7 @@ for (let i = 0; i < 80; i++) {
   starsEl.appendChild(s);
 }
 
-// ════════════════════════════════════════════════
-//  SCROLL REVEAL
-// ════════════════════════════════════════════════
+// SCROLL REVEAL
 const obs = new IntersectionObserver(entries => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
@@ -820,9 +827,7 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-// ════════════════════════════════════════════════
-//  CLICK SPARKLES
-// ════════════════════════════════════════════════
+// CLICK SPARKLES
 document.addEventListener('click', e => {
   if (e.target.closest('.dialog-overlay') || e.target.closest('#music-bar')) return;
   ['✨','💗','🌸','⭐'].slice(0,3).forEach((emoji, i) => {
@@ -835,9 +840,7 @@ document.addEventListener('click', e => {
   });
 });
 
-// ════════════════════════════════════════════════
-//  CONFETTI
-// ════════════════════════════════════════════════
+// CONFETTI
 const canvas = document.getElementById('confetti-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [], animId;
@@ -880,9 +883,7 @@ function animStep() {
   else ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-// ════════════════════════════════════════════════
-//  SORRY DIALOG
-// ════════════════════════════════════════════════
+// SORRY DIALOG
 function openSorry() {
   document.getElementById('sorryDialog').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -896,9 +897,7 @@ function closeSorryOutside(e) {
 }
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeSorry(); });
 
-// ════════════════════════════════════════════════
-//  COLORFUL HEART CURSOR
-// ════════════════════════════════════════════════
+// COLORFUL HEART CURSOR
 const heartCursor = document.getElementById('heart-cursor');
 let curX = 0, curY = 0, aimX = 0, aimY = 0;
 document.addEventListener('mousemove', e => { aimX = e.clientX; aimY = e.clientY; });
@@ -910,7 +909,6 @@ function animCursor() {
   requestAnimationFrame(animCursor);
 }
 animCursor();
-// Hide cursor when mouse leaves window
 document.addEventListener('mouseleave', () => heartCursor.style.opacity = '0');
 document.addEventListener('mouseenter', () => heartCursor.style.opacity = '1');
 </script>
