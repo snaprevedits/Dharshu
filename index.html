@@ -366,22 +366,24 @@
   .dialog-overlay{
     position:fixed;inset:0;z-index:10000;
     background:rgba(6,2,14,0.88);
-    display:flex;align-items:center;justify-content:center;
-    padding:24px;
+    display:flex;align-items:flex-start;justify-content:center;
+    padding:60px 24px 60px;
     opacity:0;pointer-events:none;
     transition:opacity 0.45s ease;
     backdrop-filter:blur(10px);
+    overflow-y:auto;
   }
   .dialog-overlay.open{opacity:1;pointer-events:all;}
   .dialog-box{
     background:linear-gradient(150deg,#1A0D28,#101828);
     border:1px solid rgba(255,182,193,0.18);
     border-radius:28px;max-width:580px;width:100%;
-    padding:56px 48px;position:relative;overflow:hidden;
+    padding:56px 48px 48px;position:relative;overflow:visible;
     transform:translateY(40px) scale(0.95);
     transition:transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
     box-shadow:0 60px 120px rgba(0,0,0,0.7),inset 0 1px 0 rgba(255,182,193,0.08);
     text-align:center;
+    flex-shrink:0;
   }
   .dialog-overlay.open .dialog-box{transform:translateY(0) scale(1);}
   .dialog-bg-glow{
@@ -391,12 +393,20 @@
     animation:glowPulse 4s ease-in-out infinite;
   }
   .dialog-close{
-    position:absolute;top:20px;right:24px;
-    background:none;border:none;cursor:pointer;
-    color:rgba(255,255,255,0.2);font-size:1.2rem;
-    transition:color 0.3s,transform 0.3s;padding:8px;line-height:1;
+    position:fixed;top:16px;right:20px;
+    background:rgba(20,10,35,0.92);
+    border:1.5px solid rgba(255,182,193,0.45);
+    border-radius:50%;
+    width:44px;height:44px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    color:rgba(255,182,193,0.95);font-size:1rem;
+    transition:color 0.3s,transform 0.3s,background 0.3s;
+    z-index:10002;
+    line-height:1;
+    box-shadow:0 4px 16px rgba(0,0,0,0.5);
   }
-  .dialog-close:hover{color:rgba(255,182,193,0.6);transform:rotate(90deg);}
+  .dialog-close:hover{color:#fff;background:rgba(255,133,161,0.3);transform:rotate(90deg);}
   .dialog-icon{font-size:3.2rem;display:block;margin-bottom:28px;animation:iconFloat 3s ease-in-out infinite;}
   @keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 
@@ -723,7 +733,6 @@
     <div class="dialog-letter">
       <p>I still carry the guilt. The guilt of things I should have said to you and didn't. Words I held back when I shouldn't have. Moments where I could have been better, kinder, more present — and I chose silence instead.</p>
       <p>I kept waiting for the right time. And the right time never came. And I'm sorry for that. <em>Truly sorry.</em></p>
-      <p>Whatever I should have said — whether it was "I'm sorry," "thank you," "I see you," or just simply "you matter to me more than you know" — <em>I should have said it sooner.</em></p>
       <p>This guilt doesn't leave easily. But I want you to know that on this day, your 19th birthday, I'm choosing to finally say it — even if it's late, even if the moment has passed. Because you deserve to hear it.</p>
     </div>
 
